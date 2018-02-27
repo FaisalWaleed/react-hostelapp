@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Buildings from './components/Buildings';
 import Dashboard from './components/Dashboard';
 import Layout from './components/Layout';
+import Register from "./components/Register";
 
 const App = () => (
   <div>
@@ -14,6 +15,7 @@ const App = () => (
         <Route path="/" component={Dashboard} exact />
         <Route path="/buildings" component={Buildings} exact />
         <Route path="/buildings/show" component={Dashboard} />
+        <Route path="/register" component={Register} />
       </Layout>
     </Router>
   </div>
