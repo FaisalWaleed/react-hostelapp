@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from "axios/index";
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component{
     constructor(props){
@@ -40,6 +41,9 @@ class Login extends React.Component{
         }).then(function(response){
             console.log(response);
             if(response.data.data.id){
+                localStorage.setItem('access-token',response.headers["access-token"]);
+                localStorage.setItem('client',response.headers["client"]);
+                localStorage.setItem('uid',response.headers["uid"]);
                 alert("Successfully Logged In!");
                 props.history.push("/");
             }
@@ -63,6 +67,8 @@ class Login extends React.Component{
                     <input type="password" name="password" className="form-control" onChange={this.handleInputChange} />
                     <br />
                     <input className="btn btn-primary" type="submit" value="Login" />
+                    <br/>
+                    <span>Not a Member? <Link to="/register">Click here to Register</Link></span>
                 </form>
             </div>
         );

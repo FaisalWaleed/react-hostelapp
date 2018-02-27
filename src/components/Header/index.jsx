@@ -25,12 +25,16 @@ class Header extends React.Component{
                 <Link to={'/buildings/show'} className="add-margin btn btn-primary" >
                   Rooms/Apt
                 </Link>
-                <Link to={'/register'} className="add-margin btn btn-danger" >
-                    Register
-                </Link>
-                <Link to={'/login'} className="add-margin btn btn-danger" >
-                    Login
-                </Link>
+
+                {localStorage.getItem("access-token") ? (
+                    <a onClick={ (props = this.props) => { localStorage.clear(); window.location.href ="/"; } } className="add-margin btn btn-danger" >
+                        Logout
+                    </a>
+                ) : (
+                      <Link to={'/login'} className="add-margin btn btn-danger" >
+                        Login
+                      </Link>
+                )}
               </div>
             </form>
           </div>
