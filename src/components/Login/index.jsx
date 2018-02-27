@@ -51,9 +51,6 @@ class Login extends React.Component{
         }).catch(function (error){
             let error_messages = error.response.data.errors;
             self.setState({errors: error_messages});
-            // errors.forEach(function (error_message) {
-            //     console.log(error_message);
-            // });
         });
     }
 
@@ -62,7 +59,7 @@ class Login extends React.Component{
             <div className="col-md-5 col-md-offset-1">
                 <h1>Login</h1>
 
-                {this.state.errors.length > 0 && <Flash messages={this.state.errors} type="danger" /> }
+                {this.state.errors.length > 0 && <Flash message={this.state.errors} type="danger" /> }
 
                 <form onSubmit={this.handleSubmit}>
                     <label>E-mail</label>
