@@ -25,6 +25,9 @@ class Header extends React.Component{
                 <Link to={'/buildings/show'} className="add-margin btn btn-primary" >
                   Rooms/Apt
                 </Link>
+                  <Link to={'/register'} className="add-margin btn btn-danger" >
+                      Register
+                  </Link>
               </div>
             </form>
           </div>
