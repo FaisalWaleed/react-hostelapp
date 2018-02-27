@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import Flash from "../Common/Flash";
 
 class Register extends React.Component{
     constructor(props){
@@ -7,7 +8,8 @@ class Register extends React.Component{
         this.state = {
             email: "",
             password: "",
-            password_confirmation: ""
+            password_confirmation: "",
+            errors: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -27,7 +29,7 @@ class Register extends React.Component{
 
     handleSubmit(event){
         event.preventDefault();
-        let props = this.props;
+        let self = this;
 
         if(this.state.password === this.state.password_confirmation){
             Axios({
@@ -43,14 +45,11 @@ class Register extends React.Component{
                 console.log(response);
                 if(response.data.data.id){
                     alert("Successfully Registered!");
-                    props.history.push("/");
+                    self.props.history.push("/");
                 }
             }).catch(function (error){
-
                 let errors = error.response.data.errors.full_messages;
-                errors.forEach(function (error_message) {
-                    console.log(error_message);
-                });
+                self.setState({errors: errors});
             });
         }
         else{
@@ -62,6 +61,8 @@ class Register extends React.Component{
         return(
             <div className="col-md-5 col-md-offset-1">
                 <h1>Register </h1>
+
+                {this.state.errors.length > 0 && <Flash message={this.state.errors} type="danger" /> }
 
                 <form onSubmit={this.handleSubmit}>
                     <label>E-mail</label>
