@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from "axios/index";
 import { Link } from 'react-router-dom';
+import Flash from "../Common/Flash";
 
 class Login extends React.Component{
     constructor(props){
@@ -8,7 +9,7 @@ class Login extends React.Component{
         this.state = {
             email: "",
             password: "",
-            errors: {}
+            errors: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,7 +30,7 @@ class Login extends React.Component{
     handleSubmit(event){
         event.preventDefault();
 
-        let props = this.props;
+        let self = this;
 
         Axios({
             method: 'post',
@@ -45,13 +46,14 @@ class Login extends React.Component{
                 localStorage.setItem('client',response.headers["client"]);
                 localStorage.setItem('uid',response.headers["uid"]);
                 alert("Successfully Logged In!");
-                props.history.push("/");
+                self.props.history.push("/");
             }
         }).catch(function (error){
-            let errors = error.response.data.errors;
-            errors.forEach(function (error_message) {
-                console.log(error_message);
-            });
+            let error_messages = error.response.data.errors;
+            self.setState({errors: error_messages});
+            // errors.forEach(function (error_message) {
+            //     console.log(error_message);
+            // });
         });
     }
 
@@ -59,6 +61,9 @@ class Login extends React.Component{
         return(
             <div className="col-md-5 col-md-offset-1">
                 <h1>Login</h1>
+
+                {this.state.errors.length > 0 && <Flash messages={this.state.errors} type="danger" /> }
+
                 <form onSubmit={this.handleSubmit}>
                     <label>E-mail</label>
                     <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.handleInputChange} required />
